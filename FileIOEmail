@@ -1,0 +1,57 @@
+# Pradeep Ravindra
+# This program reads a file for email addresses, extracts names, and then writes them to a file
+
+# Timer for Execution
+import time
+
+# System Utility
+import sys
+
+# Looks for mbox2.txt
+try:
+    fhand = open("mbox2.txt")
+except OSError:
+    print("File not found.")
+    sys.exit(0)
+
+# Writes new file addr.txt
+file = open("addr.txt", "w+")
+
+inp = fhand.read()
+
+print("This file contains", len(inp), "characters\n")
+
+# Opens mbox2.txt
+fhand = open("mbox2.txt")
+
+# Initializes empty string c
+c = ""
+
+# Adds all specified strings to string c
+for line in fhand:
+    line = line.rstrip()
+    if line.startswith("From:"):
+        c = c + (line[6:] + " ")
+
+# Replaces @ with whitespace
+c = c.replace("@", " ")
+
+# Tokenizes string based on whitespace
+token = c.split(" ")
+
+# Counter
+i = 0
+
+# Returns even positions of array to print only names
+while i < len(token):
+    print(token[i])
+    file.write(token[i] + " ")
+    i = i + 2
+
+# Closes all files in use
+fhand.close()
+file.close()
+
+# Returns Execution Time
+secs = time.clock()
+print("Execution time=", secs, "seconds")
